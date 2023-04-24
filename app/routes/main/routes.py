@@ -1,12 +1,13 @@
-from flask import render_template, make_response, request
+from flask import render_template, make_response, request, json, jsonify
 from flask_login import  login_required
 from datetime import datetime
 
-from app.main import bp
+from app.routes.main import bp
 from app.utils.contants import Method
 from app.vendor.getToken import getToken
 from app.vendor.getData import getData
-from app.extensions import cache
+from app.extensions import cache, db
+from app.model import *
 
 @bp.after_request
 @login_required
@@ -45,12 +46,6 @@ def index():
                 totalStatusOK = totalStatusOK + 1
             else: 
                 totalStatusFail = totalStatusFail + 1
-        
-            # if child.status == 'fail':
-            #     totalStatusFail = totalStatusFail + 1
-            # else:
-            #     totalStatusOK = totalStatusOK + 1
-
 
     username = request.cookies.get('username')
     return render_template('index.html', 
@@ -65,11 +60,6 @@ def index():
 @login_required
 def getProfile():
     return render_template('profile.html')
-
-@bp.route('/admin/user-manage', methods=[Method.GET])
-@login_required
-def getListUser():
-    return render_template('user-manage/list-user.html')
 
 @bp.route('/data', methods=[Method.GET])
 @login_required
