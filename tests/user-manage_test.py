@@ -6,6 +6,8 @@ from selenium.webdriver.common.keys import Keys
 import psycopg2
 import time
 
+ec2_url = "https://ec2-3-80-82-133.compute-1.amazonaws.com/"
+
 login_url = "http://127.0.0.1:50000/auth/login"
 home_url = "http://127.0.0.1:50000/"
 signup_url = "http://127.0.0.1:50000/auth/signup"
